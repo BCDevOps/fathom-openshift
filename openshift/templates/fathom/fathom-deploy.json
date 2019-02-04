@@ -1,0 +1,218 @@
+{
+  "kind": "Template",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "${NAME}-deployment-template"
+  },
+  "objects": [{
+      "kind": "DeploymentConfig",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${NAME}",
+        "generation": 1,
+        "labels": {
+          "app": "${NAME}",
+          "service": "${NAME}"
+        }
+      },
+      "spec": {
+        "strategy": {
+          "type": "Rolling"
+        },
+        "triggers": [{
+            "type": "ConfigChange"
+          },
+          {
+            "type": "ImageChange",
+            "imageChangeParams": {
+              "automatic": true,
+              "containerNames": [
+                "${NAME}"
+              ],
+              "from": {
+                "kind": "ImageStreamTag",
+                "namespace": "${IMAGE_NAMESPACE}",
+                "name": "${SOURCE_IMAGE_NAME}:${TAG_NAME}"
+              }
+            }
+          }
+        ],
+        "replicas": 1,
+        "test": false,
+        "selector": {
+          "app": "${NAME}",
+          "deploymentconfig": "${NAME}"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "${NAME}",
+              "deploymentconfig": "${NAME}"
+            }
+          },
+          "spec": {
+            "containers": [{
+              "name": "${NAME}",
+              "ports": [{
+                "containerPort": 8080,
+                "protocol": "TCP"
+              }],
+              "env": [{
+                  "name": "FATHOM_DATABASE_DRIVER",
+                  "value": "${FATHOM_DATABASE_DRIVER}"
+                },
+                {
+                  "name": "FATHOM_DATABASE_HOST",
+                  "value": "${FATHOM_DATABASE_HOST}"
+                },
+                {
+                  "name": "FATHOM_DATABASE_NAME",
+                  "valueFrom": {
+                    "secretKeyRef": {
+                      "name": "${FATHOM_DATABASE_HOST}",
+                      "key": "database-name"
+                    }
+                  }
+                },
+                {
+                  "name": "FATHOM_DATABASE_USER",
+                  "valueFrom": {
+                    "secretKeyRef": {
+                      "name": "${FATHOM_DATABASE_HOST}",
+                      "key": "database-user"
+                    }
+                  }
+                },
+                {
+                  "name": "FATHOM_DATABASE_PASSWORD",
+                  "valueFrom": {
+                    "secretKeyRef": {
+                      "name": "${FATHOM_DATABASE_HOST}",
+                      "key": "database-password"
+                    }
+                  }
+                },
+                {
+                  "name": "FATHOM_DATABASE_SSLMODE",
+                  "value": "${FATHOM_DATABASE_SSLMODE}"
+                }
+              ],
+              "resources": {
+                "requests": {
+                  "cpu": "${CPU_REQUEST}",
+                  "memory": "${MEMORY_REQUEST}"
+                },
+                "limits": {
+                  "cpu": "${CPU_LIMIT}",
+                  "memory": "${MEMORY_LIMIT}"
+                }
+              }
+            }]
+          }
+        }
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${NAME}",
+        "labels": {
+          "app": "${NAME}",
+          "service": "${NAME}"
+        }
+      },
+      "spec": {
+        "ports": [{
+          "name": "8080-tcp",
+          "protocol": "TCP",
+          "port": 8080,
+          "targetPort": 8080
+        }],
+        "selector": {
+          "deploymentconfig": "${NAME}"
+        },
+        "type": "ClusterIP",
+        "sessionAffinity": "None"
+      }
+    }
+  ],
+  "parameters": [{
+      "name": "NAME",
+      "displayName": "Name",
+      "description": "The name assigned to all of the OpenShift resources associated to the server instance.",
+      "required": true,
+      "value": "fathom"
+    },
+    {
+      "name": "IMAGE_NAMESPACE",
+      "displayName": "Image Namespace",
+      "required": true,
+      "description": "The namespace of the OpenShift project containing the imagestream for the application.",
+      "value": ""
+    },
+    {
+      "name": "SOURCE_IMAGE_NAME",
+      "displayName": "Source Image Name",
+      "description": "The name of the image to use for this resource.",
+      "required": true,
+      "value": "postgresql"
+    },
+    {
+      "name": "TAG_NAME",
+      "displayName": "Environment TAG name",
+      "description": "The TAG name for this environment, e.g., dev, test, prod",
+      "required": true,
+      "value": "dev"
+    },
+    {
+      "name": "FATHOM_DATABASE_DRIVER",
+      "displayName": "Fathom Database Driver",
+      "description": "The driver to use to connect Fathom to the database.",
+      "required": true,
+      "value": "postgresql"
+    },
+    {
+      "name": "FATHOM_DATABASE_HOST",
+      "displayName": "Fathom Database Host name",
+      "description": "The name of the service hosting the database.",
+      "required": true,
+      "value": "fathom-db"
+    },
+    {
+      "name": "FATHOM_DATABASE_SSLMODE",
+      "displayName": "Fathom Database SSL Mode",
+      "description": "The flag indicating wether to use SSL to connect to the database. For postgres it must be disable.",
+      "required": true,
+      "value": "disable"
+    },
+    {
+      "name": "CPU_REQUEST",
+      "displayName": "Resources CPU Request",
+      "description": "The resources CPU request (in cores) for this build.",
+      "required": true,
+      "value": "100m"
+    },
+    {
+      "name": "CPU_LIMIT",
+      "displayName": "Resources CPU Limit",
+      "description": "The resources CPU limit (in cores) for this build.",
+      "required": true,
+      "value": "250m"
+    },
+    {
+      "name": "MEMORY_REQUEST",
+      "displayName": "Resources Memory Request",
+      "description": "The resources Memory request (in Mi, Gi, etc) for this build.",
+      "required": true,
+      "value": "100Mi"
+    },
+    {
+      "name": "MEMORY_LIMIT",
+      "displayName": "Resources Memory Limit",
+      "description": "The resources Memory limit (in Mi, Gi, etc) for this build.",
+      "required": true,
+      "value": "512Mi"
+    }
+  ]
+}
