@@ -129,14 +129,14 @@
       "displayName": "Name",
       "description": "The name assigned to all of the OpenShift resources associated to the server instance.",
       "required": true,
-      "value": "fathom"
+      "value": "fathom-proxy"
     },
     {
       "name": "IMAGE_NAMESPACE",
       "displayName": "Image Namespace",
       "required": true,
       "description": "The namespace of the OpenShift project containing the imagestream for the application.",
-      "value": ""
+      "value": "myproject"
     },
     {
       "name": "SOURCE_IMAGE_NAME",
@@ -155,9 +155,9 @@
     {
       "name": "FATHOM_URL",
       "displayName": "Fathom URL",
-      "description": "The public domain endpoint for Fathom.",
-      "required": true,
-      "value": "https://fathom.orgbook.gov.bc.ca"
+      "description": "The public domain endpoint for Fathom. A value will be created by default if not specified.",
+      "required": false,
+      "value": ""
     },
     {
       "name": "CPU_REQUEST",
