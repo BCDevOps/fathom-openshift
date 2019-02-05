@@ -149,14 +149,14 @@
       "displayName": "Image Namespace",
       "required": true,
       "description": "The namespace of the OpenShift project containing the imagestream for the application.",
-      "value": ""
+      "value": "myproject"
     },
     {
       "name": "SOURCE_IMAGE_NAME",
       "displayName": "Source Image Name",
       "description": "The name of the image to use for this resource.",
       "required": true,
-      "value": "postgresql"
+      "value": "fathom"
     },
     {
       "name": "TAG_NAME",
@@ -170,7 +170,7 @@
       "displayName": "Fathom Database Driver",
       "description": "The driver to use to connect Fathom to the database.",
       "required": true,
-      "value": "postgresql"
+      "value": "postgres"
     },
     {
       "name": "FATHOM_DATABASE_HOST",
@@ -182,7 +182,7 @@
     {
       "name": "FATHOM_DATABASE_SSLMODE",
       "displayName": "Fathom Database SSL Mode",
-      "description": "The flag indicating wether to use SSL to connect to the database. For postgres it must be disable.",
+      "description": "The flag indicating wether to use SSL to connect to the database. For postgresql it must be 'disable'.",
       "required": true,
       "value": "disable"
     },

@@ -2,7 +2,7 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "${NAME}-deployment-template",
+    "name": "${NAME}-deployment-template"
   },
   "objects": [{
       "kind": "DeploymentConfig",
@@ -27,7 +27,7 @@
             "imageChangeParams": {
               "automatic": true,
               "containerNames": [
-                "fathom-proxy"
+                "${NAME}"
               ],
               "from": {
                 "kind": "ImageStreamTag",
