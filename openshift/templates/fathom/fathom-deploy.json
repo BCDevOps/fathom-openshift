@@ -11,7 +11,7 @@
         "name": "${NAME}",
         "generation": 1,
         "labels": {
-          "app": "${NAME}",
+          "app": "fathom",
           "service": "${NAME}"
         }
       },
@@ -40,13 +40,13 @@
         "replicas": 1,
         "test": false,
         "selector": {
-          "app": "${NAME}",
+          "app": "fathom",
           "deploymentconfig": "${NAME}"
         },
         "template": {
           "metadata": {
             "labels": {
-              "app": "${NAME}",
+              "app": "fathom",
               "deploymentconfig": "${NAME}"
             }
           },
@@ -118,7 +118,7 @@
       "metadata": {
         "name": "${NAME}",
         "labels": {
-          "app": "${NAME}",
+          "app": "fathom",
           "service": "${NAME}"
         }
       },
@@ -163,7 +163,7 @@
       "displayName": "Environment TAG name",
       "description": "The TAG name for this environment, e.g., dev, test, prod",
       "required": true,
-      "value": "latest"
+      "value": "prod"
     },
     {
       "name": "FATHOM_DATABASE_DRIVER",

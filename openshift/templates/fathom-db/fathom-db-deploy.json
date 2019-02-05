@@ -176,7 +176,7 @@
             "metadata": {
                 "name": "${NAME}",
                 "labels": {
-                  "app": "services",
+                  "app": "fathom",
                   "name": "${NAME}"
                 }
             },
@@ -198,7 +198,7 @@
             "metadata": {
                 "name": "${NAME}",
                 "labels": {
-                  "app": "services",
+                  "app": "fathom",
                   "name": "${NAME}"
                 }
             },
@@ -216,7 +216,7 @@
             "metadata": {
                 "name": "${NAME}",
                 "labels": {
-                  "app": "services",
+                  "app": "fathom",
                   "name": "${NAME}"
                 },
                 "annotations": {
@@ -267,7 +267,7 @@
             "displayName": "Environment TAG name",
             "description": "The TAG name for this environment, e.g., dev, test, prod",
             "required": true,
-            "value": "latest"
+            "value": "prod"
         },
         {
             "name": "POSTGRESQL_DATABASE_NAME",
