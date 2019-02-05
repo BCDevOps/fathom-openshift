@@ -14,3 +14,8 @@ Since there are interdependencies between deployment configurations, please make
 1) build and deploy the database
 2) build and deploy the Fathom analytics server
 3) build and deploy the proxy
+
+The scripts in [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools) can be used to manage the builds and deployments.
+
+## First Run
+Once everything is up and running in OpenShift, follow the [instructions](https://github.com/usefathom/fathom/blob/master/docs/Installation%20instructions.md#register-your-admin-user) and create your admin user to secure the analytics dashboard.

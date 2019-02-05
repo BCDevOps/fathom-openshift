@@ -150,7 +150,7 @@
       "displayName": "Environment TAG name",
       "description": "The TAG name for this environment, e.g., dev, test, prod",
       "required": true,
-      "value": "dev"
+      "value": "latest"
     },
     {
       "name": "FATHOM_URL",
