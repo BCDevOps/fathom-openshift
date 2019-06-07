@@ -16,7 +16,7 @@ labels:
 
 Fathom Analytics provides very simple website stats without tracking or storing personal data.  If you require more comprehensive analytics, a Google Analytics alternative, where data ownership and privacy compliance are still a concern check out [Matomo Openshift](https://github.com/BCDevOps/matomo-openshift).
 
-This is a set of OpenShift configurations to set up an instance of the Fathom web analytics server. See: [Fathom](usefathom.com)
+[fathom-openshift](https://github.com/BCDevOps/fathom-openshift) is a set of OpenShift configurations to set up an instance of the Fathom web analytics server. See: [Fathom](usefathom.com)
 
 ## Architecture
 The service is composed by the following components:
