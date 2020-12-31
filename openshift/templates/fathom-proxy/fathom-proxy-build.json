@@ -4,7 +4,35 @@
   "metadata": {
     "name": "${NAME}-build-template"
   },
-  "objects": [{
+  "objects": [
+    {
+      "kind": "NetworkSecurityPolicy",
+      "apiVersion": "security.devops.gov.bc.ca/v1alpha1",
+      "metadata": {
+        "name": "pods-to-external-network",
+        "labels": {
+          "name": "pods-to-external-network",
+          "env": "${ENV_NAME}",
+          "app": "${APP_NAME}${SUFFIX}",
+          "app-group": "${APP_GROUP}",
+          "role": "${ROLE}"
+        }
+      },
+      "spec": {
+        "description": "Allow the builds to access the internet.\nThis only needs to be specified once per environment.\n",
+        "source": [
+          [
+            "$namespace=${NAMESPACE_NAME}-${ENV_NAME}"
+          ]
+        ],
+        "destination": [
+          [
+            "ext:network=any"
+          ]
+        ]
+      }
+    },
+    {
       "kind": "ImageStream",
       "apiVersion": "v1",
       "metadata": {
@@ -17,7 +45,10 @@
       "metadata": {
         "name": "${NAME}",
         "labels": {
-          "app": "${NAME}"
+          "app": "${APP_NAME}${SUFFIX}",
+          "app-group": "${APP_GROUP}",
+          "role": "${ROLE}",
+          "env": "${TAG_NAME}"
         }
       },
       "spec": {
@@ -65,11 +96,60 @@
       "value": "fathom-proxy"
     },
     {
+      "name": "APP_NAME",
+      "displayName": "App Name",
+      "description": "Used to group components together in the OpenShift console.",
+      "required": true,
+      "value": "fathom"
+    },
+  {
+      "name": "NAMESPACE_NAME",
+      "displayName": "Namespace Name",
+      "description": "The name of the namespace being deployed to..",
+      "required": true,
+      "value": "4a9599"
+    },
+    {
+      "name": "ROLE",
+      "displayName": "Role",
+      "description": "The role of this service within the application - used for Network Policies",
+      "required": true,
+      "value": "proxy"
+    },
+    {
+      "name": "SUFFIX",
+      "displayName": "Suffix",
+      "description": "A suffix applied to all of the objects in this template.",
+      "required": false,
+      "value": ""
+    },
+    {
+      "name": "APP_GROUP",
+      "displayName": "App Group",
+      "description": "The name assigned to all of the deployments in this project.",
+      "required": true,
+      "value": "fathom-proxy"
+    },
+    {
+      "name": "ENV_NAME",
+      "displayName": "Environment Name",
+      "description": "Environment name.  For the build environment this will typically be 'tools'",
+      "required": true,
+      "value": "tools"
+    },
+    {
+      "name": "TAG_NAME",
+      "displayName": "Environment TAG name",
+      "description": "The TAG name for this environment, e.g., dev, test, prod",
+      "required": true,
+      "value": "latest"
+    },
+    {
       "name": "GIT_REPO_URL",
       "displayName": "Git Repo URL",
       "description": "The URL to your GIT repo.",
       "required": true,
-      "value": "https://github.com/bcgov/fathom-openshift.git"
+      "value": "https://github.com/BCDevOps/fathom-openshift.git"
     },
     {
       "name": "GIT_REF",
