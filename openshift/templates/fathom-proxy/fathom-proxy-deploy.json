@@ -19,7 +19,7 @@
         }
       },
       "spec": {
-        "description": "Allow the controller to talk to the database\n",
+        "description": "Allow the fathom-proxy to talk to the fathom\n",
         "source": [
           [
             "role=${ROLE}",
