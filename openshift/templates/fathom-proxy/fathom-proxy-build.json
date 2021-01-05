@@ -149,7 +149,7 @@
       "displayName": "Git Repo URL",
       "description": "The URL to your GIT repo.",
       "required": true,
-      "value": "https://github.com/BCDevOps/fathom-openshift.git"
+      "value": "https://github.com/wadeking98/fathom-openshift.git"
     },
     {
       "name": "GIT_REF",

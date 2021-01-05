@@ -1,4 +1,4 @@
-FROM nginx:stable
+FROM docker.io/nginx:stable
 
 # Required for HTTP Basic feature
 RUN apt-get update -y && \
