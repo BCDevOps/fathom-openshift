@@ -15,7 +15,8 @@
           "service": "${NAME}",
           "app-group": "${APP_GROUP}",
           "role": "${ROLE}",
-          "env": "${TAG_NAME}"
+          "env": "${TAG_NAME}",
+          "name":"${NAME}"
         }
       },
       "spec": {
@@ -53,7 +54,8 @@
               "deploymentconfig": "${NAME}",
               "app-group": "${APP_GROUP}",
               "role": "${ROLE}",
-              "env": "${TAG_NAME}"
+              "env": "${TAG_NAME}",
+              "name":"${NAME}"
             }
           },
           "spec": {
@@ -161,7 +163,8 @@
           "service": "${NAME}",
           "app-group": "${APP_GROUP}",
           "role": "${ROLE}",
-          "env": "${TAG_NAME}"
+          "env": "${TAG_NAME}",
+          "name":"${NAME}"
         }
       },
       "spec": {
@@ -205,7 +208,14 @@
       "displayName": "App Name",
       "description": "Used to group components together in the OpenShift console.",
       "required": true,
-      "value": "matomo"
+      "value": "fathom"
+    },
+    {
+      "name": "PROJECT_NAMESPACE",
+      "displayName": "NameSpace name",
+      "description": "name of the project namespace",
+      "required": true,
+      "value": "myproject"
     },
     {
       "name": "ROLE",
@@ -226,7 +236,7 @@
       "displayName": "App Group",
       "description": "The name assigned to all of the deployments in this project.",
       "required": true,
-      "value": "matomo-controller"
+      "value": "fathom-controller"
     },
     {
       "name": "TAG_NAME",

@@ -46,7 +46,10 @@
         "generation": 1,
         "labels": {
           "app": "fathom",
-          "service": "${NAME}"
+          "service": "${NAME}",
+          "role":"${ROLE}",
+          "env":"${TAG_NAME}",
+          "name":"${NAME}"
         }
       },
       "spec": {
@@ -83,7 +86,10 @@
             "labels": {
               "app": "fathom",
               "deploymentconfig": "${NAME}",
-              "service": "${NAME}"
+              "service": "${NAME}",
+              "role":"${ROLE}",
+              "env":"${TAG_NAME}",
+              "name":"${NAME}"
             }
           },
           "spec": {
@@ -111,7 +117,9 @@
         "name": "${NAME}",
         "labels": {
           "app": "fathom",
-          "name": "${NAME}"
+          "name": "${NAME}",
+          "role":"${ROLE}",
+          "env":"${TAG_NAME}"
         }
       },
       "spec": {
@@ -133,7 +141,10 @@
         "name": "${NAME}",
         "labels": {
           "app": "fathom",
-          "service": "${NAME}"
+          "service": "${NAME}",
+          "role":"${ROLE}",
+          "env":"${TAG_NAME}",
+          "name":"${NAME}"
         }
       },
       "spec": {
@@ -185,6 +196,13 @@
       "description": "Used to group components together in the OpenShift console.",
       "required": true,
       "value": "fathom"
+    },
+    {
+      "name": "PROJECT_NAMESPACE",
+      "displayName": "NameSpace name",
+      "description": "name of the project namespace",
+      "required": true,
+      "value": "myproject"
     },
     {
       "name": "ROLE",
