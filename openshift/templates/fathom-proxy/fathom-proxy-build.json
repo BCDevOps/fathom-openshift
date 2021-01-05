@@ -131,6 +131,14 @@
       "value": "tools"
     },
     {
+      "name": "PROJECT_NAMESPACE",
+      "displayName": "NameSpace name",
+      "description": "name of the project namespace",
+      "required": true,
+      "value": "myproject"
+    },
+    
+    {
       "name": "TAG_NAME",
       "displayName": "Environment TAG name",
       "description": "The TAG name for this environment, e.g., dev, test, prod",
