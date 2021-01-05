@@ -156,7 +156,7 @@
       "displayName": "Git Reference",
       "description": "The git reference or branch.",
       "required": true,
-      "value": "master"
+      "value": "dockerCreds"
     },
     {
       "name": "OUTPUT_IMAGE_TAG",
