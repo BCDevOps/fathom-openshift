@@ -138,7 +138,7 @@
             "role=${ROLE}",
             "app=${APP_NAME}${SUFFIX}",
             "env=${TAG_NAME}",
-            "$namespace=${NAMESPACE_NAME}-${TAG_NAME}"
+            "$namespace=${PROJECT_NAMESPACE}-${TAG_NAME}"
           ]
         ],
         "destination": [
@@ -146,7 +146,7 @@
             "role=db",
             "app=${APP_NAME}${SUFFIX}",
             "env=${TAG_NAME}",
-            "$namespace=${NAMESPACE_NAME}-${TAG_NAME}"
+            "$namespace=${PROJECT_NAMESPACE}-${TAG_NAME}"
           ]
         ]
       }
@@ -206,13 +206,6 @@
       "description": "Used to group components together in the OpenShift console.",
       "required": true,
       "value": "matomo"
-    },
-    {
-      "name": "NAMESPACE_NAME",
-      "displayName": "Namespace Name",
-      "description": "The name of the namespace being deployed to..",
-      "required": true,
-      "value": "myproject"
     },
     {
       "name": "ROLE",

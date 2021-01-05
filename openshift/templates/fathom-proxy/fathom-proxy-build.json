@@ -22,7 +22,7 @@
         "description": "Allow the builds to access the internet.\nThis only needs to be specified once per environment.\n",
         "source": [
           [
-            "$namespace=${NAMESPACE_NAME}-${ENV_NAME}"
+            "$namespace=${PROJECT_NAMESPACE}-${ENV_NAME}"
           ]
         ],
         "destination": [
@@ -65,7 +65,7 @@
           "dockerStrategy": {
             "dockerfilePath": "${DOCKER_FILE_PATH}",
             "pullSecret":{
-              "name":"artifactory-creds"
+              "name":"${ARTIFACTORY_CREDS}"
             },
             "env":[
               {"name":"BUILD_LOGLEVEL", "value":"2"},
@@ -109,13 +109,6 @@
       "required": true,
       "value": "fathom"
     },
-  {
-      "name": "NAMESPACE_NAME",
-      "displayName": "Namespace Name",
-      "description": "The name of the namespace being deployed to..",
-      "required": true,
-      "value": "myproject"
-    },
     {
       "name": "ROLE",
       "displayName": "Role",
@@ -138,12 +131,27 @@
       "value": "fathom-proxy"
     },
     {
+      "name": "ARTIFACTORY_CREDS",
+      "displayName": "Artifactory-Creds",
+      "description": "the artifactory pull secret",
+      "required": true,
+      "value": ""
+    },
+    {
       "name": "ENV_NAME",
       "displayName": "Environment Name",
       "description": "Environment name.  For the build environment this will typically be 'tools'",
       "required": true,
       "value": "tools"
     },
+    {
+      "name": "PROJECT_NAMESPACE",
+      "displayName": "NameSpace name",
+      "description": "name of the project namespace",
+      "required": true,
+      "value": "myproject"
+    },
+    
     {
       "name": "TAG_NAME",
       "displayName": "Environment TAG name",
@@ -156,14 +164,14 @@
       "displayName": "Git Repo URL",
       "description": "The URL to your GIT repo.",
       "required": true,
-      "value": "https://github.com/BCDevOps/fathom-openshift.git"
+      "value": "https://github.com/wadeking98/fathom-openshift.git"
     },
     {
       "name": "GIT_REF",
       "displayName": "Git Reference",
       "description": "The git reference or branch.",
       "required": true,
-      "value": "master"
+      "value": "dockerCreds"
     },
     {
       "name": "OUTPUT_IMAGE_TAG",
