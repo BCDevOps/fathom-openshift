@@ -291,13 +291,6 @@
             "required": true,
             "value": "fathom"
           },
-        {
-            "name": "NAMESPACE_NAME",
-            "displayName": "Namespace Name",
-            "description": "The name of the namespace being deployed to..",
-            "required": true,
-            "value": "4a9599"
-          },
           {
             "name": "ROLE",
             "displayName": "Role",

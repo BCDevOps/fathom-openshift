@@ -25,7 +25,7 @@
             "role=${ROLE}",
             "app=${APP_NAME}${SUFFIX}",
             "env=${TAG_NAME}",
-            "$namespace=${NAMESPACE_NAME}-${TAG_NAME}"
+            "$namespace=${PROJECT_NAMESPACE}-${TAG_NAME}"
           ]
         ],
         "destination": [
@@ -33,7 +33,7 @@
             "role=controller",
             "app=${APP_NAME}${SUFFIX}",
             "env=${TAG_NAME}",
-            "$namespace=${NAMESPACE_NAME}-${TAG_NAME}"
+            "$namespace=${PROJECT_NAMESPACE}-${TAG_NAME}"
           ]
         ]
       }
@@ -178,6 +178,41 @@
       "description": "The name of the image to use for this resource.",
       "required": true,
       "value": "fathom-proxy"
+    },
+    {
+      "name": "APP_NAME",
+      "displayName": "App Name",
+      "description": "Used to group components together in the OpenShift console.",
+      "required": true,
+      "value": "fathom"
+    },
+    {
+      "name": "ROLE",
+      "displayName": "Role",
+      "description": "The role of this service within the application - used for Network Policies",
+      "required": true,
+      "value": "proxy"
+    },
+    {
+      "name": "SUFFIX",
+      "displayName": "Suffix",
+      "description": "A suffix applied to all of the objects in this template.",
+      "required": false,
+      "value": ""
+    },
+    {
+      "name": "APP_GROUP",
+      "displayName": "App Group",
+      "description": "The name assigned to all of the deployments in this project.",
+      "required": true,
+      "value": "fathom-proxy"
+    },
+    {
+      "name": "ENV_NAME",
+      "displayName": "Environment Name",
+      "description": "Environment name.  For the build environment this will typically be 'tools'",
+      "required": true,
+      "value": "tools"
     },
     {
       "name": "TAG_NAME",

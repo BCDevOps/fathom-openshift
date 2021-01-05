@@ -22,7 +22,7 @@
         "description": "Allow the builds to access the internet.\nThis only needs to be specified once per environment.\n",
         "source": [
           [
-            "$namespace=${NAMESPACE_NAME}-${ENV_NAME}"
+            "$namespace=${PROJECT_NAMESPACE}-${ENV_NAME}"
           ]
         ],
         "destination": [
@@ -101,13 +101,6 @@
       "description": "Used to group components together in the OpenShift console.",
       "required": true,
       "value": "fathom"
-    },
-  {
-      "name": "NAMESPACE_NAME",
-      "displayName": "Namespace Name",
-      "description": "The name of the namespace being deployed to..",
-      "required": true,
-      "value": "4a9599"
     },
     {
       "name": "ROLE",
