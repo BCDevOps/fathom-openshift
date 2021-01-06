@@ -137,7 +137,7 @@
     {
       "name": "ARTIFACTORY_CREDS",
       "displayName": "Artifactory-Creds",
-      "description": "the artifactory pull secret",
+      "description": "the artifactory pull cred",
       "required": true,
       "value": "artifactory-creds"
     },
