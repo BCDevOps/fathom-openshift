@@ -9,7 +9,10 @@
       "kind": "ImageStream",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${NAME}"
+        "name": "${NAME}",
+        "labels": {
+          "app": "${APP_NAME}${SUFFIX}"
+        }
       },
       "spec": {
         "tags": [
