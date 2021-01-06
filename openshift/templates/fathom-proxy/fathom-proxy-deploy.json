@@ -25,7 +25,7 @@
             "role=${ROLE}",
             "app=${APP_NAME}${SUFFIX}",
             "env=${TAG_NAME}",
-            "$namespace=${PROJECT_NAMESPACE}-${TAG_NAME}"
+            "$namespace=${NAMESPACE_NAME}-${TAG_NAME}"
           ]
         ],
         "destination": [
@@ -33,7 +33,7 @@
             "role=controller",
             "app=${APP_NAME}${SUFFIX}",
             "env=${TAG_NAME}",
-            "$namespace=${PROJECT_NAMESPACE}-${TAG_NAME}"
+            "$namespace=${NAMESPACE_NAME}-${TAG_NAME}"
           ]
         ]
       }
@@ -198,7 +198,7 @@
       "value": "fathom"
     },
     {
-      "name": "PROJECT_NAMESPACE",
+      "name": "NAMESPACE_NAME",
       "displayName": "NameSpace name",
       "description": "name of the project namespace",
       "required": true,

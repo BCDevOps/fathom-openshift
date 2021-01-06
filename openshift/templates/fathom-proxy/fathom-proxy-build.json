@@ -22,7 +22,7 @@
         "description": "Allow the builds to access the internet.\nThis only needs to be specified once per environment.\n",
         "source": [
           [
-            "$namespace=${PROJECT_NAMESPACE}-${ENV_NAME}"
+            "$namespace=${NAMESPACE_NAME}-${ENV_NAME}"
           ]
         ],
         "destination": [
@@ -149,7 +149,7 @@
       "value": "tools"
     },
     {
-      "name": "PROJECT_NAMESPACE",
+      "name": "NAMESPACE_NAME",
       "displayName": "NameSpace name",
       "description": "name of the project namespace",
       "required": true,
