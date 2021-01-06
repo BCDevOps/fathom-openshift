@@ -16,7 +16,7 @@
                 "name": "${NAME}",
                 "generation": 1,
                 "labels": {
-                  "app": "fathom",
+                  "app": "${APP_NAME}${SUFFIX}",
                   "name": "${NAME}",
                   "app-group": "${APP_GROUP}",
                     "role": "${ROLE}",
@@ -59,6 +59,7 @@
                 "template": {
                     "metadata": {
                         "labels": {
+                            "app":"${APP_NAME}${SUFFIX}",
                             "name": "${NAME}",
                             "app-group": "${APP_GROUP}",
                             "role": "${ROLE}",
@@ -182,7 +183,7 @@
             "metadata": {
                 "name": "${NAME}",
                 "labels": {
-                  "app": "fathom",
+                  "app": "${APP_NAME}${SUFFIX}",
                   "name": "${NAME}",
                   "app-group": "${APP_GROUP}",
                 "role": "${ROLE}",
@@ -207,7 +208,7 @@
             "metadata": {
                 "name": "${NAME}",
                 "labels": {
-                  "app": "fathom",
+                  "app": "${APP_NAME}${SUFFIX}",
                   "name": "${NAME}",
                   "app-group": "${APP_GROUP}",
                     "role": "${ROLE}",
@@ -228,7 +229,7 @@
             "metadata": {
                 "name": "${NAME}",
                 "labels": {
-                  "app": "fathom",
+                  "app": "${APP_NAME}${SUFFIX}",
                   "name": "${NAME}",
                   "app-group": "${APP_GROUP}",
                     "role": "${ROLE}",

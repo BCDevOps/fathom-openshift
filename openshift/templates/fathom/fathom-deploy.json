@@ -11,7 +11,7 @@
         "name": "${NAME}",
         "generation": 1,
         "labels": {
-          "app": "fathom",
+          "app": "${APP_NAME}${SUFFIX}",
           "service": "${NAME}",
           "app-group": "${APP_GROUP}",
           "role": "${ROLE}",
@@ -50,7 +50,7 @@
         "template": {
           "metadata": {
             "labels": {
-              "app": "fathom",
+              "app": "${APP_NAME}${SUFFIX}",
               "deploymentconfig": "${NAME}",
               "app-group": "${APP_GROUP}",
               "role": "${ROLE}",
@@ -134,7 +134,7 @@
         }
       },
       "spec": {
-        "description": "Allow the controller to talk to the database\n",
+        "description": "Allow the builds to access the internet.\nThis only needs to be specified once per environment.\n",
         "source": [
           [
             "role=${ROLE}",
@@ -159,7 +159,7 @@
       "metadata": {
         "name": "${NAME}",
         "labels": {
-          "app": "fathom",
+          "app": "${APP_NAME}${SUFFIX}",
           "service": "${NAME}",
           "app-group": "${APP_GROUP}",
           "role": "${ROLE}",
