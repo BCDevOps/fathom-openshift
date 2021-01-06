@@ -8,7 +8,10 @@
     "kind": "ImageStream",
     "apiVersion": "v1",
     "metadata": {
-      "name": "${NAME}"
+      "name": "${NAME}",
+      "labels": {
+        "app": "${APP_NAME}${SUFFIX}"
+      }
     },
     "spec": {
       "tags": [{
@@ -36,7 +39,7 @@
       "displayName": "Output Image Tag",
       "description": "The tag given to the built image.",
       "required": true,
-      "value": "latest"
+      "value": "dev"
     },
     {
       "name": "SOURCE_IMAGE_KIND",
@@ -44,6 +47,20 @@
       "description": "The 'kind' (type) of the  source image; typically ImageStreamTag, or DockerImage.",
       "required": true,
       "value": "DockerImage"
+    },
+    {
+      "name": "APP_NAME",
+      "displayName": "App Name",
+      "description": "Used to group components together in the OpenShift console.",
+      "required": true,
+      "value": "fathom"
+    },
+    {
+      "name": "SUFFIX",
+      "displayName": "Suffix",
+      "description": "A suffix applied to all of the objects in this template.",
+      "required": false,
+      "value": ""
     },
     {
       "name": "SOURCE_IMAGE_NAME",

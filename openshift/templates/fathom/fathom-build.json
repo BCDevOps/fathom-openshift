@@ -40,11 +40,25 @@
       "value": "fathom"
     },
     {
+      "name": "APP_NAME",
+      "displayName": "App Name",
+      "description": "Used to group components together in the OpenShift console.",
+      "required": true,
+      "value": "fathom"
+    },
+    {
+      "name": "SUFFIX",
+      "displayName": "Suffix",
+      "description": "A suffix applied to all of the objects in this template.",
+      "required": false,
+      "value": ""
+    },
+    {
       "name": "OUTPUT_IMAGE_TAG",
       "displayName": "Output Image Tag",
       "description": "The tag given to the built image.",
       "required": true,
-      "value": "version-1.2.1"
+      "value": "dev"
     },
     {
       "name": "SOURCE_IMAGE_KIND",
