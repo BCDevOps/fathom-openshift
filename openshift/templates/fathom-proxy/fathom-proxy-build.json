@@ -168,14 +168,14 @@
       "displayName": "Git Repo URL",
       "description": "The URL to your GIT repo.",
       "required": true,
-      "value": "https://github.com/wadeking98/fathom-openshift.git"
+      "value": "https://github.com/BCDevOps/fathom-openshift.git"
     },
     {
       "name": "GIT_REF",
       "displayName": "Git Reference",
       "description": "The git reference or branch.",
       "required": true,
-      "value": "dockerCreds"
+      "value": "master"
     },
     {
       "name": "OUTPUT_IMAGE_TAG",
