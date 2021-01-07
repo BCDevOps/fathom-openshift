@@ -42,11 +42,11 @@ oc secrets link builder artifactory-creds
 ~~~
 
 Once the secret is created, use the manage script in the openshift folder to deploy your project  
->./manage -n 4a9599 init
+```./manage -n 4a9599 init```  
 this will generate local param files, make sure to go through each of the param files, uncomment NAMESPACE_NAME, and set it to your project namespace. In this case, 4a9599.  
-next we can build and deploy
->./manage build
->./manage -e dev deploy
+next we can build and deploy  
+```./manage build```
+```./manage -e dev deploy```
 
 
 ## First Run
