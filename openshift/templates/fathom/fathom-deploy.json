@@ -222,7 +222,7 @@
       "displayName": "Role",
       "description": "The role of this service within the application - used for Network Policies",
       "required": true,
-      "value": "controller"
+      "value": "api"
     },
     {
       "name": "SUFFIX",
@@ -236,7 +236,7 @@
       "displayName": "App Group",
       "description": "The name assigned to all of the deployments in this project.",
       "required": true,
-      "value": "fathom-controller"
+      "value": "fathom-api"
     },
     {
       "name": "TAG_NAME",

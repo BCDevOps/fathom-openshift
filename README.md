@@ -63,7 +63,7 @@ Once the secret is created, use the manage script in the openshift folder to dep
   
 This will generate local param files, make sure to go through each of the param files, uncomment NAMESPACE_NAME, and set it to your project namespace. In this case, 4a9599.  
 
-***If you're using a custom docker registry*** you will also need to uncomment and change DOCKER_REG and PULL_CREDS in the fathom-proxy-build param file.  
+***If you're using a custom docker registry*** you will also need to uncomment and change DOCKER_REG and PULL_CREDS in `fathom-proxy-build.local.param` and SOURCE_IMAGE_NAME in `fathom-build.local.param`  
 
 Next we can build and deploy  
 >./manage build

@@ -30,7 +30,7 @@
         ],
         "destination": [
           [
-            "role=controller",
+            "role=api",
             "app=${APP_NAME}${SUFFIX}",
             "env=${TAG_NAME}",
             "$namespace=${NAMESPACE_NAME}-${TAG_NAME}"
