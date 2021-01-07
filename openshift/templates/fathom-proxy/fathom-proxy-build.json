@@ -9,7 +9,7 @@
       "kind": "NetworkSecurityPolicy",
       "apiVersion": "security.devops.gov.bc.ca/v1alpha1",
       "metadata": {
-        "name": "pods-to-external-network",
+        "name": "${ENV_NAME}-pods-to-external-network",
         "labels": {
           "name": "pods-to-external-network",
           "env": "${ENV_NAME}",
