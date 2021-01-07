@@ -226,13 +226,6 @@
       "value": "fathom-proxy"
     },
     {
-      "name": "ENV_NAME",
-      "displayName": "Environment Name",
-      "description": "Environment name.  For the build environment this will typically be 'tools'",
-      "required": true,
-      "value": "tools"
-    },
-    {
       "name": "TAG_NAME",
       "displayName": "Environment TAG name",
       "description": "The TAG name for this environment, e.g., dev, test, prod",

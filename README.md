@@ -25,11 +25,15 @@ The service is composed by the following components:
 - *fathom-proxy*: the [nginx](https://www.nginx.com) service used as reverse-proxy
 
 ## Deployment / Configuration
-The templates provided in the `openshift` folder include everything that is necessary to create the required builds and deployments.
+The templates provided in the `openshift` folder include everything that is necessary to create the required builds and deployments.  
 
-In order to run Fathom on the openshift cluster, you MUST install [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools)  
+To run Fathom on openshift you **MUST** install [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools) and have them available on your path  
 
-There should already be a "artifacts-default-******" secret in the tools environment of your openshift cluster. Copy the username and password of this 
+By default, Fathom uses the artifactory docker registry. If you are going to keep the default settings artifactory **MUST** be enabled in your OCP cluster, otherwise you will have to tweak the param file to specify your docker registry.  
+
+
+#####Running with Artifactory:
+There should already be a "artifacts-default-\*\*\*\*\*\*" secret in the tools environment of your openshift cluster. Copy the username and password of this 
 secret and run the following command in each environment you wish to build/deploy to. (example: tools and dev / tools and prod)
 ~~~
 oc create secret docker-registry artifactory-creds \
@@ -41,12 +45,29 @@ oc secrets link default artifactory-creds --for=pull
 oc secrets link builder artifactory-creds
 ~~~
 
+#####Running with custom Docker registry:
+Pretty much the same command works when using a custom docker registry. You can change docker.io to be any server you want. If you're using the default unauthenticated docker registry, you can skip this section as long as you remeber to set DOCKER_REG and PULL_CREDS to blank and uncomment them.
+~~~
+oc create secret docker-registry docker-creds \
+    --docker-server=docker.io \
+    --docker-username=<docker username> \
+    --docker-password=<docker password> \
+    --docker-email=unused
+oc secrets link default docker-creds --for=pull
+oc secrets link builder docker-creds
+~~~
+#####Deploy:
+
 Once the secret is created, use the manage script in the openshift folder to deploy your project  
-```./manage -n 4a9599 init```  
-this will generate local param files, make sure to go through each of the param files, uncomment NAMESPACE_NAME, and set it to your project namespace. In this case, 4a9599.  
-next we can build and deploy  
-```./manage build```
-```./manage -e dev deploy```
+>./manage -n 4a9599 init  
+  
+This will generate local param files, make sure to go through each of the param files, uncomment NAMESPACE_NAME, and set it to your project namespace. In this case, 4a9599.  
+
+***If you're using a custom docker registry*** you will also need to uncomment and change DOCKER_REG and PULL_CREDS in the fathom-proxy-build param file.  
+
+Next we can build and deploy  
+>./manage build
+>./manage -e dev deploy
 
 
 ## First Run
