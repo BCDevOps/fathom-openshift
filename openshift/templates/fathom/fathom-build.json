@@ -58,7 +58,7 @@
       "displayName": "Output Image Tag",
       "description": "The tag given to the built image.",
       "required": true,
-      "value": "dev"
+      "value": "version-1.2.1"
     },
     {
       "name": "SOURCE_IMAGE_KIND",
