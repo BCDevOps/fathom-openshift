@@ -69,12 +69,12 @@
           "dockerStrategy": {
             "dockerfilePath": "${DOCKER_FILE_PATH}",
             "pullSecret":{
-              "name":"${ARTIFACTORY_CREDS}"
+              "name":"${PULL_CREDS}"
             },
-            "env":[
-              {"name":"BUILD_LOGLEVEL", "value":"2"},
-              {"name":"NPM_CONFIG_LOGLEVEL", "value":"notice"}
-            ]
+            "from":{
+              "kind":"DockerImage",
+              "name":"${DOCKER_REG}nginx:stable"
+            }
           }
         },
         "output": {
@@ -135,10 +135,17 @@
       "value": "fathom-proxy"
     },
     {
-      "name": "ARTIFACTORY_CREDS",
-      "displayName": "Artifactory-Creds",
-      "description": "the artifactory pull cred",
-      "required": true,
+      "name": "DOCKER_REG",
+      "displayName": "Docker-Registry",
+      "description": "The name of the docker server",
+      "required": false,
+      "value": "docker-remote.artifacts.developer.gov.bc.ca/"
+    },
+    {
+      "name": "PULL_CREDS",
+      "displayName": "Pull-Credentials",
+      "description": "The name of the secret that will be used to pull from a docker server",
+      "required": false,
       "value": "artifactory-creds"
     },
     {
