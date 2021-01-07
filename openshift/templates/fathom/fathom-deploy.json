@@ -134,7 +134,7 @@
         }
       },
       "spec": {
-        "description": "Allow the builds to access the internet.\nThis only needs to be specified once per environment.\n",
+        "description": "Allow Fathom api to access Fathom DB",
         "source": [
           [
             "role=${ROLE}",
