@@ -27,12 +27,27 @@ The service is composed by the following components:
 ## Deployment / Configuration
 The templates provided in the `openshift` folder include everything that is necessary to create the required builds and deployments.
 
-Since there are interdependencies between deployment configurations, please make sure to follow this order when creating them for the first time:
-1) build and deploy the database
-2) build and deploy the Fathom analytics server
-3) build and deploy the proxy
+In order to run Fathom on the openshift cluster, you MUST install [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools) and [Artifactory](https://github.com/BCDevOps/OpenShift4-Migration/issues/51)  
 
-The scripts in [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools) can be used to manage the builds and deployments.
+There should already be a "artifacts-default-******" secret in the tools environment of your openshift cluster. Copy the username and password of this 
+secret and run the following command in each environment you wish to build/deploy to. (example: tools and dev / tools and prod)
+~~~
+oc create secret docker-registry artifactory-creds \
+    --docker-server=docker-remote.artifacts.developer.gov.bc.ca \
+    --docker-username=<our username from secret> \
+    --docker-password=<our password from secret> \
+    --docker-email=unused
+oc secrets link default artifactory-creds --for=pull
+oc secrets link builder artifactory-creds
+~~~
+
+Once the secret is created, use the manage script in the openshift folder to deploy your project  
+>./manage -n 4a9599 init
+this will generate local param files, make sure to go through each of the param files, uncomment NAMESPACE_NAME, and set it to your project namespace. In this case, 4a9599.  
+next we can build and deploy
+>./manage build
+>./manage -e dev deploy
+
 
 ## First Run
 Once everything is up and running in OpenShift, follow the [instructions](https://github.com/usefathom/fathom/blob/master/docs/Installation%20instructions.md#register-your-admin-user) and create your admin user to secure the analytics dashboard.
