@@ -1,0 +1,192 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: ${NAME}-deployment-template
+objects:
+  - kind: NetworkSecurityPolicy
+    apiVersion: security.devops.gov.bc.ca/v1alpha1
+    metadata:
+      name: custom-${APP_NAME}-${NAME}${SUFFIX}-policy
+      labels:
+        name: custom-${APP_NAME}-${NAME}${SUFFIX}-policy
+        app: ${APP_NAME}${SUFFIX}
+        app-group: ${APP_GROUP}
+        role: ${ROLE}
+        env: ${TAG_NAME}
+    spec:
+      description: Allow Fathom proxy to access Fathom api
+      source:
+        - - role=${ROLE}
+          - app=${APP_NAME}${SUFFIX}
+          - env=${TAG_NAME}
+          - $namespace=${NAMESPACE_NAME}-${TAG_NAME}
+      destination:
+        - - role=api
+          - app=${APP_NAME}${SUFFIX}
+          - env=${TAG_NAME}
+          - $namespace=${NAMESPACE_NAME}-${TAG_NAME}
+  - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
+      name: ${NAME}
+      generation: 1
+      labels:
+        app: ${APP_NAME}${SUFFIX}
+        service: ${NAME}
+        role: ${ROLE}
+        env: ${TAG_NAME}
+        name: ${NAME}
+    spec:
+      strategy:
+        type: Rolling
+      triggers:
+        - type: ConfigChange
+        - type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${NAME}
+            from:
+              kind: ImageStreamTag
+              namespace: ${IMAGE_NAMESPACE}
+              name: ${SOURCE_IMAGE_NAME}:${TAG_NAME}
+      replicas: 1
+      test: false
+      selector:
+        app: fathom
+        deploymentconfig: ${NAME}
+        service: ${NAME}
+      template:
+        metadata:
+          labels:
+            app: ${APP_NAME}${SUFFIX}
+            deploymentconfig: ${NAME}
+            service: ${NAME}
+            role: ${ROLE}
+            env: ${TAG_NAME}
+            name: ${NAME}
+        spec:
+          containers:
+            - name: ${NAME}
+              ports:
+                - containerPort: 80
+                  protocol: TCP
+                - containerPort: 8080
+                  protocol: TCP
+              env: []
+  - kind: Route
+    apiVersion: v1
+    metadata:
+      name: ${NAME}
+      labels:
+        app: ${APP_NAME}${SUFFIX}
+        name: ${NAME}
+        role: ${ROLE}
+        env: ${TAG_NAME}
+    spec:
+      host: ${FATHOM_URL}
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
+      to:
+        kind: Service
+        name: ${NAME}
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      name: ${NAME}
+      labels:
+        app: ${APP_NAME}${SUFFIX}
+        service: ${NAME}
+        role: ${ROLE}
+        env: ${TAG_NAME}
+        name: ${NAME}
+    spec:
+      ports:
+        - name: 80-tcp
+          protocol: TCP
+          port: 80
+          targetPort: 80
+        - name: 8080-tcp
+          protocol: TCP
+          port: 8080
+          targetPort: 8080
+      selector:
+        deploymentconfig: ${NAME}
+      type: ClusterIP
+      sessionAffinity: None
+parameters:
+  - name: NAME
+    displayName: Name
+    description: The name assigned to all of the OpenShift resources associated to
+      the server instance.
+    required: true
+    value: fathom-proxy
+  - name: IMAGE_NAMESPACE
+    displayName: Image Namespace
+    required: true
+    description: The namespace of the OpenShift project containing the imagestream
+      for the application.
+    value: myproject
+  - name: SOURCE_IMAGE_NAME
+    displayName: Source Image Name
+    description: The name of the image to use for this resource.
+    required: true
+    value: fathom-proxy
+  - name: APP_NAME
+    displayName: App Name
+    description: Used to group components together in the OpenShift console.
+    required: true
+    value: fathom
+  - name: NAMESPACE_NAME
+    displayName: NameSpace name
+    description: name of the project namespace
+    required: true
+    value: myproject
+  - name: ROLE
+    displayName: Role
+    description: The role of this service within the application - used for Network
+      Policies
+    required: true
+    value: proxy
+  - name: SUFFIX
+    displayName: Suffix
+    description: A suffix applied to all of the objects in this template.
+    required: false
+    value: ''
+  - name: APP_GROUP
+    displayName: App Group
+    description: The name assigned to all of the deployments in this project.
+    required: true
+    value: fathom-proxy
+  - name: TAG_NAME
+    displayName: Environment TAG name
+    description: The TAG name for this environment, e.g., dev, test, prod
+    required: true
+    value: prod
+  - name: FATHOM_URL
+    displayName: Fathom URL
+    description: The public domain endpoint for Fathom. A value will be created by
+      default if not specified.
+    required: false
+    value: ''
+  - name: CPU_REQUEST
+    displayName: Resources CPU Request
+    description: The resources CPU request (in cores) for this build.
+    required: true
+    value: 100m
+  - name: CPU_LIMIT
+    displayName: Resources CPU Limit
+    description: The resources CPU limit (in cores) for this build.
+    required: true
+    value: 250m
+  - name: MEMORY_REQUEST
+    displayName: Resources Memory Request
+    description: The resources Memory request (in Mi, Gi, etc) for this build.
+    required: true
+    value: 100Mi
+  - name: MEMORY_LIMIT
+    displayName: Resources Memory Limit
+    description: The resources Memory limit (in Mi, Gi, etc) for this build.
+    required: true
+    value: 512Mi
