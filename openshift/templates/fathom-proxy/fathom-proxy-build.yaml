@@ -49,7 +49,7 @@ objects:
             name: ${PULL_CREDS}
           from:
             kind: DockerImage
-            name: ${DOCKER_REG}nginx:stable
+            name: ${DOCKER_REG}
       output:
         to:
           kind: ImageStreamTag
@@ -88,7 +88,7 @@ parameters:
     displayName: Docker-Registry
     description: The name of the docker server
     required: false
-    value: docker-remote.artifacts.developer.gov.bc.ca/
+    value: docker-remote.artifacts.developer.gov.bc.ca/nginx:stable
   - name: PULL_CREDS
     displayName: Pull-Credentials
     description: The name of the secret that will be used to pull from a docker server
