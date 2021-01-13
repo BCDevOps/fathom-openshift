@@ -25,14 +25,32 @@ The service is composed by the following components:
 - *fathom-proxy*: the [nginx](https://www.nginx.com) service used as reverse-proxy
 
 ## Deployment / Configuration
-The templates provided in the `openshift` folder include everything that is necessary to create the required builds and deployments.
+The templates provided in the `openshift` folder include everything that is necessary to create the required builds and deployments.  
 
-Since there are interdependencies between deployment configurations, please make sure to follow this order when creating them for the first time:
-1) build and deploy the database
-2) build and deploy the Fathom analytics server
-3) build and deploy the proxy
+To run Fathom on openshift you **MUST** install [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools) and have them available on your path  
 
-The scripts in [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools) can be used to manage the builds and deployments.
+By default, Fathom uses the artifactory docker registry. If you are going to keep the default settings artifactory **MUST** be enabled in your OCP cluster, otherwise you will have to tweak the param file to specify your docker registry.  
+
+
+##### Running with Artifactory/docker.io:
+There should already be a "artifacts-default-\*\*\*\*\*\*" secret in the tools environment of your openshift cluster. Copy the username and password of this.
+Follow the instructions on [artifactory](https://developer.gov.bc.ca/Artifact-Repositories) to create an artifactory secret in each of the environments
+you will be building/deploying to.
+
+If you want to use your docker hub account, do the same command as for artifactory but use your docker.io login credentials.
+##### Deploy:
+
+Once the secret is created, use the manage script in the openshift folder to deploy your project  
+>./manage -n 4a9599 init  
+  
+This will generate local param files, make sure to go through each of the param files, uncomment NAMESPACE_NAME, and set it to your project namespace. In this case, 4a9599.  
+
+***If you're using a custom docker registry*** you will also need to uncomment and change DOCKER_REG and PULL_CREDS in `fathom-proxy-build.local.param` and SOURCE_IMAGE_NAME in `fathom-build.local.param`  
+
+Next we can build and deploy  
+>./manage build
+>./manage -e dev deploy
+
 
 ## First Run
 Once everything is up and running in OpenShift, follow the [instructions](https://github.com/usefathom/fathom/blob/master/docs/Installation%20instructions.md#register-your-admin-user) and create your admin user to secure the analytics dashboard.
