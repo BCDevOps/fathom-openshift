@@ -226,7 +226,9 @@ updateDeploymentParams() {
       # Uncomment and update the required deployment settings ...
       _parameterFilters="/TAG_NAME/s~^#.~~;"
       _parameterFilters="${_parameterFilters}/IMAGE_NAMESPACE/s~^#.~~;"
+      _parameterFilters="${_parameterFilters}/NAMESPACE_NAME/s~^#.~~;"
       _parameterFilters="${_parameterFilters}s~\(^TAG_NAME=\).*$~\1${_imageTag}~;"
+      _parameterFilters="${_parameterFilters}s~\(^NAMESPACE_NAME=\).*$~\1${PROJECT_NAMESPACE}~;"
 
       cat ${paramFile} | sed ${_parameterFilters} > ${paramFile}.tmp
       rm ${paramFile}
@@ -244,6 +246,8 @@ deployApp(){
     if dcExists ${_appName}; then
       OPERATION=update genDepls.sh -u -l
     else
+      echoWarning "\nApplying required network security policies."
+      oc -n ${PROJECT_NAMESPACE}-${DEPLOYMENT_ENV_NAME} process -f ./templates/nsp/deploy.yaml -p NAMESPACE=${PROJECT_NAMESPACE}-${DEPLOYMENT_ENV_NAME} | oc create -f -
       genDepls.sh -l
     fi
 
@@ -268,7 +272,7 @@ cleanResources()
 {
   (
     _appName=${1:-fathom}
-    oc -n $(getProjectName) delete all,configmap -l app=${_appName}
+    oc -n $(getProjectName) delete all,nsp,configmap -l app=${_appName}
   )
 }
 
@@ -300,6 +304,8 @@ case "${_cmd}" in
     ;;
 
   build)
+    echoWarning "\nApplying required network security policies."
+    oc -n ${TOOLS} process -f ./templates/nsp/build.yaml -p NAMESPACE=${PROJECT_NAMESPACE} | oc create -f -
     echoWarning "\nDeploying the build configuration.\nPlease wait for the build to complete before running any other command."
     genBuilds.sh -l
     ;;
