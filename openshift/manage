@@ -314,6 +314,7 @@ case "${_cmd}" in
     ;;
 
   build)
+    echoWarning "\nDeploying the build configuration.\nPlease wait for the build to complete before running any other command."
     genBuilds.sh -l
     ;;
 
