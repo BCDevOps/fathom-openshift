@@ -17,6 +17,7 @@ objects:
         app-group: ${APP_GROUP}
         role: ${ROLE}
         env: ${TAG_NAME}
+        backup: ${BACKUP}
     spec:
       strategy:
         type: Recreate
@@ -47,6 +48,7 @@ objects:
             app-group: ${APP_GROUP}
             role: ${ROLE}
             env: ${TAG_NAME}
+            backup: ${BACKUP}
         spec:
           volumes:
             - name: ${NAME}-data
@@ -54,7 +56,7 @@ objects:
                 claimName: ${NAME}
           containers:
             - name: ${NAME}
-              image: ' '
+              image: " "
               ports:
                 - containerPort: 5432
                   protocol: TCP
@@ -118,6 +120,7 @@ objects:
           dnsPolicy: ClusterFirst
           securityContext: {}
           schedulerName: default-scheduler
+
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
@@ -128,6 +131,7 @@ objects:
         app-group: ${APP_GROUP}
         role: ${ROLE}
         env: ${TAG_NAME}
+        backup: ${BACKUP}
     spec:
       storageClassName: ${PERSISTENT_VOLUME_CLASS}
       accessModes:
@@ -135,6 +139,7 @@ objects:
       resources:
         requests:
           storage: ${PERSISTENT_VOLUME_SIZE}
+
   - kind: Secret
     apiVersion: v1
     metadata:
@@ -145,12 +150,14 @@ objects:
         app-group: ${APP_GROUP}
         role: ${ROLE}
         env: ${TAG_NAME}
+        backup: ${BACKUP}
     stringData:
       admin-password: ${POSTGRESQL_ADMIN_PASSWORD}
       database-password: ${POSTGRESQL_PASSWORD}
       database-user: ${POSTGRESQL_USER}
       database-name: ${POSTGRESQL_DATABASE_NAME}
     type: Opaque
+
   - kind: Service
     apiVersion: v1
     metadata:
@@ -161,6 +168,7 @@ objects:
         app-group: ${APP_GROUP}
         role: ${ROLE}
         env: ${TAG_NAME}
+        backup: ${BACKUP}
       annotations:
         template.openshift.io/expose-uri: postgres://{.spec.clusterIP}:{.spec.ports[?(.name=="postgresql")].port}
     spec:
@@ -173,17 +181,20 @@ objects:
         name: ${NAME}
       type: ClusterIP
       sessionAffinity: None
+
 parameters:
   - name: NAME
     displayName: Name
-    description: The name assigned to all of the OpenShift resources associated to
+    description:
+      The name assigned to all of the OpenShift resources associated to
       the server instance.
     required: true
     value: fathom-db
   - name: IMAGE_NAMESPACE
     displayName: Image Namespace
     required: true
-    description: The namespace of the OpenShift project containing the imagestream
+    description:
+      The namespace of the OpenShift project containing the imagestream
       for the application.
     value: myproject
   - name: SOURCE_IMAGE_NAME
@@ -196,6 +207,11 @@ parameters:
     description: The TAG name for this environment, e.g., dev, test, prod
     required: true
     value: prod
+  - name: BACKUP
+    displayName: Backup Flag
+    description: Determines whether this database should be accessible by a backup container. Defaults to "false".
+    required: true
+    value: "false"
   - name: APP_NAME
     displayName: App Name
     description: Used to group components together in the OpenShift console.
@@ -203,7 +219,8 @@ parameters:
     value: fathom
   - name: ROLE
     displayName: Role
-    description: The role of this service within the application - used for Network
+    description:
+      The role of this service within the application - used for Network
       Policies
     required: true
     value: db
@@ -211,7 +228,7 @@ parameters:
     displayName: Suffix
     description: A suffix applied to all of the objects in this template.
     required: false
-    value: ''
+    value: ""
   - name: APP_GROUP
     displayName: App Group
     description: The name assigned to all of the deployments in this project.
@@ -225,25 +242,28 @@ parameters:
     from: fathom.db
   - name: POSTGRESQL_USER
     displayName: PostgreSQL Connection Username
-    description: Username for PostgreSQL user that will be used for accessing the
+    description:
+      Username for PostgreSQL user that will be used for accessing the
       database.  Needs to be base64 encoded/
     required: true
     generate: expression
-    from: '[a-zA-Z0-9]{10}'
+    from: "[a-zA-Z0-9]{10}"
   - name: POSTGRESQL_PASSWORD
     displayName: PostgreSQL Connection Password
-    description: Password for the PostgreSQL connection user.  Needs to be base64
+    description:
+      Password for the PostgreSQL connection user.  Needs to be base64
       encoded/
     required: true
     generate: expression
-    from: '[a-zA-Z0-9]{16}'
+    from: "[a-zA-Z0-9]{16}"
   - name: POSTGRESQL_ADMIN_PASSWORD
     displayName: PostgreSQL Admin Password
-    description: Password for the 'postgres' PostgreSQL administrative account.  Needs
+    description:
+      Password for the 'postgres' PostgreSQL administrative account.  Needs
       to be base64 encoded.
     required: true
     generate: expression
-    from: '[a-zA-Z0-9]{16}'
+    from: "[a-zA-Z0-9]{16}"
   - name: MOUNT_PATH
     displayName: Mount Path
     description: The path to mount the persistent volume.

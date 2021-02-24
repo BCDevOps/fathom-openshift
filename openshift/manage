@@ -217,16 +217,28 @@ fi
 # -----------------------------------------------------------------------------------------------------------------
 # Functions:
 # -----------------------------------------------------------------------------------------------------------------
-updateDeploymentParams() {
-  (
-    _imageTag=${1:-"latest"}
+updateBuildParams() {
+  updateParams "build" "tools"
+}
 
-    _paramFiles=$(find . -name "*deploy.local.param")
+updateDeploymentParams() {
+  _imageTag=${1:-"dev"}
+  updateParams "deploy" $_imageTag
+}
+
+updateParams() {
+  (
+    _configType=${1}
+    _imageTag=${2}
+
+    _paramFiles=$(find . -name "*${_configType}.local.param")
     for paramFile in ${_paramFiles}; do
       # Uncomment and update the required deployment settings ...
       _parameterFilters="/TAG_NAME/s~^#.~~;"
       _parameterFilters="${_parameterFilters}/IMAGE_NAMESPACE/s~^#.~~;"
+      _parameterFilters="${_parameterFilters}/NAMESPACE_NAME/s~^#.~~;"
       _parameterFilters="${_parameterFilters}s~\(^TAG_NAME=\).*$~\1${_imageTag}~;"
+      _parameterFilters="${_parameterFilters}s~\(^NAMESPACE_NAME=\).*$~\1${PROJECT_NAMESPACE}~;"
 
       cat ${paramFile} | sed ${_parameterFilters} > ${paramFile}.tmp
       rm ${paramFile}
@@ -268,7 +280,7 @@ cleanResources()
 {
   (
     _appName=${1:-fathom}
-    oc -n $(getProjectName) delete all,configmap -l app=${_appName}
+    oc -n $(getProjectName) delete all,nsp,configmap -l app=${_appName}
   )
 }
 
@@ -284,6 +296,8 @@ initialize(){
   # Generate local params files ...
   echo "Generating local param files ..."
   genTemplateParams.sh -lf
+  updateBuildParams
+  updateDeploymentParams
 
   echo "Environment settings:"
   echo "  Project namespace: ${PROJECT_NAMESPACE}"

@@ -18,10 +18,12 @@ objects:
             name: ${SOURCE_IMAGE_NAME}:${SOURCE_IMAGE_TAG}
           importPolicy:
             scheduled: true
+
 parameters:
   - name: NAME
     displayName: Name
-    description: The name assigned to all of the frontend objects defined in this
+    description:
+      The name assigned to all of the frontend objects defined in this
       template.  You should keep this as default unless your know what your doing.
     required: true
     value: postgresql
@@ -32,7 +34,8 @@ parameters:
     value: latest
   - name: SOURCE_IMAGE_KIND
     displayName: Source Image Kind
-    description: The 'kind' (type) of the  source image; typically ImageStreamTag,
+    description:
+      The 'kind' (type) of the  source image; typically ImageStreamTag,
       or DockerImage.
     required: true
     value: DockerImage
@@ -45,7 +48,7 @@ parameters:
     displayName: Suffix
     description: A suffix applied to all of the objects in this template.
     required: false
-    value: ''
+    value: ""
   - name: SOURCE_IMAGE_NAME
     displayName: Source Image Name
     description: The name of the source image.
